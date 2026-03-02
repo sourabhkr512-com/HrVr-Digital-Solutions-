@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="HrVr Digital Solutions — Your Idea, My Coding! Custom websites, apps, Python automation, UI/UX design."/>
+  <meta name="keywords" content="web development, python, flask, HTML5, CSS3, JavaScript, MySQL, mobile app, UI UX design"/>
+  <title>HrVr Digital Solutions 🚀 — Your Idea, My Coding!</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet"/>
+
+  <!-- Icons (CDN) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/animations.css') }}"/>
+</head>
+<body>
+
+<!-- ══ LOADER ══ -->
+<div class="loader" id="loader">
+  <div class="loader-logo">HrVr Digital</div>
+  <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+  <div style="font-size:.8rem;color:var(--text-muted);">Loading Awesome Things...</div>
+</div>
+
+<!-- ══ BACKGROUND LAYERS ══ -->
+<div class="stars-bg"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+<canvas id="particles-canvas"></canvas>
+
+<!-- ══ MOBILE NAV DRAWER ══ -->
+<div class="nav-drawer" id="navDrawer">
+  <span class="nav-drawer-close" id="drawerClose">✕</span>
+  <a href="#hero">Home</a>
+  <a href="#tech">Tech Stack</a>
+  <a href="#services">Services</a>
+  <a href="#portfolio">Portfolio</a>
+  <a href="#contact">Contact</a>
+</div>
+
+<!-- ══ NAVBAR ══ -->
+<nav class="navbar" id="navbar">
+  <div class="nav-logo">HrVr <span>Digital</span></div>
+  <ul class="nav-links">
+    <li><a href="#hero"      class="active">Home</a></li>
+    <li><a href="#tech">Tech Stack</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#why">Why Me</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta neon-pulse">🚀 Hire Me</a>
+  <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- ══════════════════════════════════════════════
+     HERO
+══════════════════════════════════════════════ -->
+<section class="hero" id="hero">
+  <div class="hero-content">
+
+
+    <h1 class="hero-title">HrVr Digital<br/>Solutions</h1>
+
+    <p class="hero-subtitle">
+      Do you want to build your own dream project or business website?<br/>
+      <strong style="color:var(--secondary)">Then don’t wait — contact me now!</strong>
+    </p>
+
+    <div class="hero-tagline">
+      "Your Idea, My <span class="typing-cursor" id="typingText">Coding</span>!"
+    </div>
+
+    <div class="hero-buttons">
+      <a href="#services" class="btn btn-primary neon-pulse">🚀 Check Out My Services.</a>
+      <a href="#contact"  class="btn btn-outline">📩 DM Me Now</a>
+    </div>
+
+    <!-- Tech Icon Badges -->
+    <div class="hero-tech-icons">
+      <div class="tech-icon-badge">
+        <span class="icon">🌐</span>HTML5
+      </div>
+      <div class="tech-icon-badge">
+        <span class="icon">🐍</span>Python
+      </div>
+      <div class="tech-icon-badge">
+        <span class="icon">💛</span>JavaScript
+      </div>
+      <div class="tech-icon-badge">
+        <span class="icon">🐬</span>MySQL
+      </div>
+      <div class="tech-icon-badge">
+        <span class="icon">🛡️</span>PHP
+      </div>
+      <div class="tech-icon-badge">
+        <span class="icon">🎨</span>Figma
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="hero-stats reveal">
+      <div class="stat-item">
+        <div class="stat-number" data-count="20" data-suffix="+">0+</div>
+        <div class="stat-label">Projects Completed</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" data-count="18" data-suffix="+">0+</div>
+        <div class="stat-label">Happy Clients</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" data-count="15" data-suffix="+">0+</div>
+        <div class="stat-label">Tech Skills</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" data-count="1.5" data-suffix=" Yrs">0 Yrs</div>
+        <div class="stat-label">Experience</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="glow-divider"></div>
+
+<!-- ══════════════════════════════════════════════
+     TECH STACK
+══════════════════════════════════════════════ -->
+<section id="tech" class="section-accent-purple">
+  <div class="container">
+    <div class="section-header reveal">
+      <h2 class="section-title">Technologies I Work With</h2>
+      <p class="section-desc">Full-stack capabilities from beautiful frontends to powerful backends.</p>
+    </div>
+    <div class="tech-grid">
+      {% for category, info in tech_stack.items() %}
+      <div class="tech-card shine-card reveal">
+        <div class="tech-card-icon">{{ info.icon }}</div>
+        <div class="tech-card-title">{{ category }}</div>
+        <div>
+          {% for skill in info.skills %}
+          <span class="skill-tag">{{ skill }}</span>
+          {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<div class="glow-divider"></div>
+
+<!-- ══════════════════════════════════════════════
+     SERVICES
+══════════════════════════════════════════════ -->
+<section id="services" class="services-section section-accent-cyan">
+  <div class="container">
+    <div class="section-header reveal">
+      <h2 class="section-title">Services & Solutions</h2>
+      <p class="section-desc">From idea to deployment — I handle everything for you.</p>
+    </div>
+    <div class="services-grid">
+      {% for svc in services %}
+      <div class="service-card shine-card reveal">
+        <span class="service-icon">{{ svc.icon }}</span>
+        <div class="service-title">{{ svc.title }}</div>
+        <div class="service-desc">{{ svc.desc }}</div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<div class="glow-divider"></div>
+
+<!-- ══════════════════════════════════════════════
+     PORTFOLIO
+══════════════════════════════════════════════ -->
+<section id="portfolio" class="section-accent-purple">
+  <div class="container">
+    <div class="section-header reveal">
+      <h2 class="section-title">Check Out My Work.</h2>
+      <p class="section-desc">Real-world projects I have built for clients and personal use.</p>
+    </div>
+    <div class="portfolio-grid">
+      {% for proj in projects %}
+      <div class="project-card shine-card reveal">
+        <div class="project-header">
+          <span class="project-icon">{{ proj.icon }}</span>
+          <div>
+            <div class="project-name">{{ proj.name }}</div>
+            <div class="project-tech">🛠 {{ proj.tech }}</div>
+          </div>
+        </div>
+        <span class="project-status {{ 'status-completed' if proj.status == 'Completed' else 'status-progress' }}">
+          {{ '✅' if proj.status == 'Completed' else '⏳' }} {{ proj.status }}
+        </span>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<div class="glow-divider"></div>
+
+<!-- ══════════════════════════════════════════════
+     WHY ME
+══════════════════════════════════════════════ -->
+<section id="why" class="section-accent-cyan">
+  <div class="container">
+    <div class="section-header reveal">
+      <h2 class="section-title">Why Choose Me?</h2>
+      <p class="section-desc">Quality, speed, and dedication — guaranteed with every project.</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-card reveal">
+        <div class="why-icon">⚡</div>
+        <div class="why-title">Fast Delivery</div>
+        <div class="why-desc">I respect deadlines. Every project is delivered on time.</div>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon">💎</div>
+        <div class="why-title">Clean Code</div>
+        <div class="why-desc">Well-structured, commented, and maintainable code — always.</div>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon">📱</div>
+        <div class="why-title">Fully Responsive</div>
+        <div class="why-desc">From desktop to mobile — perfect design on every screen.</div>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon">🛡️</div>
+        <div class="why-title">Secure & Reliable</div>
+        <div class="why-desc">I follow security best practices in every project.</div>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon">🤝</div>
+        <div class="why-title">24/7 Support</div>
+        <div class="why-desc">You’ll receive support even after the project is completed — you’re not alone.</div>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon">💰</div>
+        <div class="why-title">Affordable Price</div>
+        <div class="why-desc">Premium quality at student-friendly rates — no compromise.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="glow-divider"></div>
+
+<!-- ══════════════════════════════════════════════
+     CTA
+══════════════════════════════════════════════ -->
+<div class="cta-section reveal">
+  <div class="container">
+    <div class="cta-title">Your Idea, My Coding!</div>
+    <div class="cta-subtitle">
+      Ready to turn your dream project into reality?<br/>
+      Let's build something amazing together. 🚀
+    </div>
+    <div class="dm-tag">DM me.</div>
+    <br/>
+    <a href="#contact" class="btn btn-primary neon-pulse" style="font-size:1.1rem;padding:1rem 2.5rem;">
+      📩 Contact Me Now.
+    </a>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     CONTACT
+══════════════════════════════════════════════ -->
+<section id="contact" class="contact-section">
+  <div class="container">
+    <div class="section-header reveal">
+      <h2 class="section-title">Let's Talk</h2>
+      <p class="section-desc">Share your project idea — I’ll provide a free estimate!</p>
+    </div>
+    <div class="contact-wrapper">
+
+      <!-- Contact Info -->
+      <div class="contact-info reveal">
+        <h3>📬 Get In Touch</h3>
+        <p>
+          I accept all kinds of coding projects — from small freelance tasks to complete web applications.
+Get in touch with me, and let’s build something amazing together!
+        </p>
+        <div class="contact-links">
+          <div class="contact-link">
+            <span class="contact-link-icon">📧</span>
+            <div>
+              <div style="font-size:.75rem;color:var(--text-muted);">Email</div>
+              <div style="font-size:.9rem;">hrvrdigitalsolutions@gmail.com</div>
+            </div>
+          </div>
+          <div class="contact-link">
+            <span class="contact-link-icon">💬</span>
+            <div>
+              <div style="font-size:.75rem;color:var(--text-muted);">WhatsApp / DM</div>
+              <div style="font-size:.9rem;">Available on WhatsApp, Instagram</div>
+            </div>
+          </div>
+          <div class="contact-link">
+            <span class="contact-link-icon">📍</span>
+            <div>
+              <div style="font-size:.75rem;color:var(--text-muted);">Location</div>
+              <div style="font-size:.9rem;">India 🇮🇳 (Remote Worldwide)</div>
+            </div>
+          </div>
+          <div class="contact-link">
+            <span class="contact-link-icon">⏰</span>
+            <div>
+              <div style="font-size:.75rem;color:var(--text-muted);">Response Time</div>
+              <div style="font-size:.9rem;">Usually within 2–4 hours</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <div class="reveal">
+        <form class="contact-form" id="contactForm">
+          <div class="form-group">
+            <label for="name">👤 Name *</label>
+            <input type="text" id="name" placeholder="Enter your name..." required/>
+          </div>
+          <div class="form-group">
+            <label for="email">📧 Email Address *</label>
+            <input type="email" id="email" placeholder="yourname@email.com" required/>
+          </div>
+          <div class="form-group">
+            <label for="project">🚀 Project Type</label>
+            <select id="project">
+              <option value="">Select Project Type...</option>
+              <option value="business_website">Custom Business Website</option>
+              <option value="portfolio">Personal Portfolio</option>
+              <option value="management_system">Management System (School/Hospital/Library)</option>
+              <option value="web_app">Database-driven Web App</option>
+              <option value="python_automation">Python Automation/Scripts</option>
+              <option value="mobile_app">Android / iOS Mobile App</option>
+              <option value="ui_ux">UI/UX Design in Figma</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">💬 Project Details *</label>
+            <textarea id="message" rows="4" placeholder="Describe your project idea — tell me your budget, required features, and deadline!" required></textarea>
+          </div>
+          <button type="submit" class="btn-submit" id="submitBtn"> Send Message</button>
+          <div class="form-message" id="formMessage"></div>
+        </form>
+        
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-logo">HrVr Digital Solutions</div>
+  <div class="footer-tagline">"You Imagine It, I Develop It." 🚀</div>
+  <div class="footer-links">
+    <a href="#hero">Home</a>
+    <a href="#tech">Tech Stack</a>
+    <a href="#services">Services</a>
+    <a href="#portfolio">Portfolio</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="footer-copy">
+    &copy; {{ year }} HrVr Digital Solutions. Built with ❤️ &amp; Python Flask.
+  </div>
+</footer>
+
+<!-- Toast & Scroll-top -->
+<div class="toast" id="toast"></div>
+<button class="scroll-top" id="scrollTop" title="Scroll to top">↑</button>
+
+<!-- Scripts -->
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
