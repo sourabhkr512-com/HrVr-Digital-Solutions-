@@ -1,14 +1,24 @@
 """
 HrVr Digital Solutions — Flask Web Application
-Fixed & Complete Version — Contact Form Working
+Fixed & Complete Version — Contact Form Working + MongoDB Storage
 """
 
 from flask import Flask, render_template, request, jsonify
 from dotenv import load_dotenv
-load_dotenv()  # .env file se password load karo
+from mongo_models import create_indexes, message_insert, service_get_all, stats_get_all
 from flask_mail import Mail, Message
+
+load_dotenv()  # .env file se password load karo
 from datetime import datetime
 import os
+
+# MongoDB helpers
+from mongo_models import (
+    create_indexes,
+    message_insert, message_get_all, message_count,
+    service_get_all, project_get_all, tech_get_all, stats_get_all,
+    stat_increment
+)
 
 app = Flask(__name__)
 app.secret_key = "hrvr_digital_solutions_2026"
@@ -28,6 +38,15 @@ app.config['MAIL_PASSWORD']       = os.environ.get('Digitalbotservices@255', 'jw
 app.config['MAIL_DEFAULT_SENDER'] = ('HrVr Digital Solutions', 'hrvrdigitalsolutions@gmail.com')
 
 mail = Mail(app)
+
+# Indexes on startup
+with app.app_context():
+    try:
+        create_indexes()
+        print("✅ MongoDB Indexes Ready!")
+    except Exception as e:
+        print(f"⚠️ Index creation: {e}")
+        
 
 # ─────────────────────────────────────────────
 # Portfolio / Services Data
@@ -115,15 +134,8 @@ def api_contact():
     if not all([name, email, message]):
         return jsonify({"success": False, "error": "Please fill all required fields."}), 400
 
-    # Memory me save karo
-    entry = {
-        "id":        len(MESSAGES) + 1,
-        "name":      name,
-        "email":     email,
-        "project":   project,
-        "message":   message,
-        "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    }
+    # ── Save to MongoDB ──────────────────────
+    entry = message_insert(name, email, project, message)
     MESSAGES.append(entry)
 
     # ─── HTML Mail Body ───
@@ -209,18 +221,28 @@ Reply directly to client: {email}
         "message": "Message sent successfully! I'll get back to you within 2-4 hours. 🚀"
     })
 
+# ─────────────────────────────────────────────
+# Stats API — MongoDB se live data
+# ─────────────────────────────────────────────
+@app.route("/api/stats")
+def api_stats():
+    stats_list = stats_get_all()
+    result = {s["stat_key"]: s["stat_value"] for s in stats_list}
+    return jsonify(result)
 
 # ─────────────────────────────────────────────
 # Stats API
 # ─────────────────────────────────────────────
-@app.route("/api/stats")
-def api_stats():
-    return jsonify({
+@app.route("/api/services")
+def api_services():
+    services = service_get_all()
+    stats = {
         "projects_completed": 50,
         "happy_clients":      30,
         "tech_skills":        15,
         "years_experience":    3
-    })
+    }
+    return jsonify({**services, **stats})
 
 
 # ─────────────────────────────────────────────
@@ -228,9 +250,10 @@ def api_stats():
 # ─────────────────────────────────────────────
 if __name__ == "__main__":
     print("=" * 55)
-    print("  🚀  HrVr Digital Solutions — Server Starting  🚀")
+    print("  🚀  HrVr Digital Solutions — MongoDB Server  🚀")
     print("=" * 55)
     print("  Open: http://127.0.0.1:5001")
-    print("  📧  Mail will be sent to: hrvrdigitalsolutions@gmail.com")
+    print("  📧  Mail → hrvrdigitalsolutions@gmail.com")
+    print("  🍃  MongoDB → hrvr_digital database")
     print("=" * 55)
     app.run(debug=True, host="0.0.0.0", port=5001)
